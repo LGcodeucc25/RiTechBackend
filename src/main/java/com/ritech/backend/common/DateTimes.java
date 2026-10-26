@@ -7,6 +7,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 
 /**
  * Timestamps are stored as UTC LocalDateTime values and exposed with the Bogotá offset.
@@ -20,7 +21,7 @@ public final class DateTimes {
     }
 
     public static LocalDateTime nowUtc(Clock clock) {
-        return LocalDateTime.now(clock.withZone(ZoneOffset.UTC));
+        return LocalDateTime.now(clock.withZone(ZoneOffset.UTC)).truncatedTo(ChronoUnit.SECONDS);
     }
 
     public static OffsetDateTime toBogota(LocalDateTime utc) {
