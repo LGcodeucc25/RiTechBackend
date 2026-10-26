@@ -18,10 +18,10 @@ public final class RecommendationEngine {
     public static final String NEUTRAL_CONDITION = "condición neutra";
     public static final String HIGH_VOLATILITY_SUFFIX = " (alta volatilidad)";
 
-    static final String OPENING_WARNING = "Se emitió en los primeros 15 minutos de negociación, una franja de alta "
-            + "volatilidad: el precio puede cambiar con rapidez y la señal es menos confiable.";
-    static final String CLOSING_WARNING = "Se emitió en los últimos 15 minutos antes del cierre, una franja de alta "
-            + "volatilidad: el precio puede cambiar con rapidez y la señal es menos confiable.";
+    public static final String OPENING_WARNING = "Se emitió en los primeros 15 minutos de negociación, una franja de "
+            + "alta volatilidad: el precio puede cambiar con rapidez y la señal es menos confiable.";
+    public static final String CLOSING_WARNING = "Se emitió en los últimos 15 minutos antes del cierre, una franja de "
+            + "alta volatilidad: el precio puede cambiar con rapidez y la señal es menos confiable.";
 
     private RecommendationEngine() {
     }
@@ -71,10 +71,16 @@ public final class RecommendationEngine {
             case HOLD -> "El RSI está en " + value + ", entre los límites de 30 y 70. El índice no muestra "
                     + "sobrecompra ni sobreventa, por lo que se recomienda MANTENER.";
         };
+        String warning = warning(volatility);
+        return warning == null ? text : text + " " + warning;
+    }
+
+    /** The volatility warning, or null outside the high-volatility windows. */
+    public static String warning(Volatility volatility) {
         return switch (volatility) {
-            case OPENING -> text + " " + OPENING_WARNING;
-            case CLOSING -> text + " " + CLOSING_WARNING;
-            case NONE -> text;
+            case OPENING -> OPENING_WARNING;
+            case CLOSING -> CLOSING_WARNING;
+            case NONE -> null;
         };
     }
 

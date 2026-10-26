@@ -22,8 +22,9 @@ final class Fixtures {
         }
     }
 
+    /** The fixture as fetched on 2026-10-23 at 11:06 New York time. */
     static ChartData chart(String name) {
-        return new YahooFinanceClient(null, Clock.systemUTC(), Duration.ZERO).parse(json(name), Instant.EPOCH);
+        return new YahooFinanceClient(null, Clock.systemUTC(), Duration.ZERO).parse(json(name), ny("11:06:00"));
     }
 
     /** An instant on Friday 2026-10-23 (EDT) at the given New York time. */

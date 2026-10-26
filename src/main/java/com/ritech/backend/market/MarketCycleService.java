@@ -38,7 +38,7 @@ public class MarketCycleService {
     }
 
     /** The last failure since the last success, used to report the data status. */
-    public record Failure(String status, String reason, Instant at) {
+    public record Failure(String status, String reason, boolean stale, Instant at) {
     }
 
     private final YahooFinanceClient client;
@@ -128,7 +128,7 @@ public class MarketCycleService {
             snapshot = MarketSnapshot.evaluate(client.fetchChart(), now);
         } catch (MarketDataException ex) {
             integrationLogService.recordFailure(ex.getStatus(), ex.getMessage());
-            lastFailure = new Failure(ex.getStatus(), ex.getMessage(), now);
+            lastFailure = new Failure(ex.getStatus(), ex.getMessage(), ex.isStale(), now);
             return Outcome.FAILED;
         }
         LocalDateTime windowEnd = DateTimes.toUtc(snapshot.windowEnd());

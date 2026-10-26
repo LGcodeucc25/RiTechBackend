@@ -39,7 +39,7 @@ public record MarketSnapshot(Instant windowEnd, BigDecimal lastClose, BigDecimal
             throw MarketDataException.error("El último cierre de 5 minutos llegó vacío.");
         }
         if (last.end().isBefore(now.minus(MAX_AGE))) {
-            throw MarketDataException.error("Los datos tienen más de 10 minutos de antigüedad.");
+            throw MarketDataException.stale("Los datos tienen más de 10 minutos de antigüedad.");
         }
         List<BigDecimal> closes = completed.stream().map(ChartData.Bar::close).filter(Objects::nonNull).toList();
         if (closes.size() < RsiCalculator.MIN_CLOSES) {

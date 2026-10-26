@@ -22,4 +22,10 @@ public final class CurrentUser {
         }
         throw new ApiException(HttpStatus.UNAUTHORIZED, "UNAUTHORIZED", "Debes iniciar sesión para continuar.");
     }
+
+    /** The user's display name from the token's {@code name} claim, or null. */
+    public static String name(Authentication authentication) {
+        return authentication instanceof JwtAuthenticationToken token ? token.getToken().getClaimAsString("name")
+                : null;
+    }
 }
