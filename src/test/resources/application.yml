@@ -1,0 +1,8 @@
+ritech:
+  jwt:
+    secret: test-secret-that-is-long-enough-for-hs256-signing
+    expiration: 8h
+  cors:
+    allowed-origins: http://localhost:5173
+  seed:
+    enabled: false
