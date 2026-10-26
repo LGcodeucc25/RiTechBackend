@@ -36,6 +36,14 @@ public final class DateTimes {
         return utc == null ? null : utc.atOffset(ZoneOffset.UTC).atZoneSameInstant(NEW_YORK).toOffsetDateTime();
     }
 
+    public static LocalDateTime toUtc(Instant instant) {
+        return LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
+    }
+
+    public static Instant toInstant(LocalDateTime utc) {
+        return utc.toInstant(ZoneOffset.UTC);
+    }
+
     public static LocalDateTime toUtc(ZonedDateTime dateTime) {
         return dateTime.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
     }
